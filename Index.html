@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Carlsberg Proizvodnja</title>
+    <style>
+        :root {
+            --carlsberg-green: #006A4D;
+            --light-grey: #f4f4f4;
+            --ok-color: #28a745;
+            --nok-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: var(--light-grey);
+            padding-bottom: 50px;
+        }
+
+        /* Zelena traka - Header */
+        .header {
+            background-color: var(--carlsberg-green);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Kartice */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--carlsberg-green);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Radio Dugmad - Stabilna i velika */
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .radio-group input[type="radio"] {
+            display: none;
+        }
+
+        .radio-label {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        input[value="OK"]:checked + .radio-label {
+            background-color: var(--ok-color);
+            color: white;
+            border-color: var(--ok-color);
+        }
+
+        input[value="NOK"]:checked + .radio-label {
+            background-color: var(--nok-color);
+            color: white;
+            border-color: var(--nok-color);
+        }
+
+        /* Napomene */
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+            resize: none;
+        }
+
+        /* Footer Dugme */
+        .submit-btn {
+            background-color: var(--carlsberg-green);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">CARLSBERG INTERNA KONTROLA</div>
+
+<div class="container" id="app">
+    <div id="j-section"></div>
+    <div id="l-section"></div>
+
+    <div class="card">
+        <div class="card-title">✍️ Potpis</div>
+        <textarea placeholder="Ime i prezime operatera..."></textarea>
+    </div>
+
+    <button class="submit-btn" onclick="alert('Podaci sačuvani!')">SAČUVAJ SMENU</button>
+</div>
+
+<script>
+    const machines = ['J1', 'J2', 'J3', 'J4', 'L1', 'L2'];
+    const jSection = document.getElementById('j-section');
+    const lSection = document.getElementById('l-section');
+
+    machines.forEach(m => {
+        const card = `
+            <div class="card">
+                <div class="card-title">Mašina ${m}</div>
+                <div class="radio-group">
+                    <input type="radio" name="${m}" id="${m}_ok" value="OK">
+                    <label for="${m}_ok" class="radio-label">OK</label>
+                    
+                    <input type="radio" name="${m}" id="${m}_nok" value="NOK">
+                    <label for="${m}_nok" class="radio-label">NOK</label>
+                </div>
+                <textarea placeholder="Napomena za ${m}..."></textarea>
+            </div>
+        `;
+        if(m.startsWith('J')) jSection.innerHTML += card;
+        else lSection.innerHTML += card;
+    });
+</script>
+
+</body>
+</html>
